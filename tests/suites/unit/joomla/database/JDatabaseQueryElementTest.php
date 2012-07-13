@@ -197,7 +197,7 @@ class JDatabaseQueryElementTest extends PHPUnit_Framework_TestCase
 
 		$this->assertThat(
 			(string) $e,
-			$this->equalTo($expected)
+			$this->equalTo(str_replace("\n", PHP_EOL, $expected))
 		);
 	}
 

@@ -145,6 +145,7 @@ class JDatabasePostgresqlQueryTest extends TestCase
 		$this->assertThat(
 			(string) $q,
 			$this->equalTo(
+				str_replace("\n", PHP_EOL,
 				"\nSELECT a.id" .
 				"\nFROM a" .
 				"\nINNER JOIN b ON b.id = a.id" .
@@ -152,7 +153,7 @@ class JDatabasePostgresqlQueryTest extends TestCase
 				"\nGROUP BY a.id" .
 				"\nHAVING COUNT(a.id) > 3" .
 				"\nORDER BY a.id"
-			),
+			)),
 			'Tests for correct rendering.'
 		);
 	}
@@ -176,11 +177,12 @@ class JDatabasePostgresqlQueryTest extends TestCase
 		$this->assertThat(
 			(string) $q,
 			$this->equalTo(
+				str_replace("\n", PHP_EOL,
 				"\nUPDATE #__foo AS a" .
 				"\nSET a.id = 2" .
 				"\nFROM b" .
 				"\nWHERE b.id = 1 AND b.id = a.id"
-			),
+			)),
 			'Tests for correct rendering.'
 		);
 	}
@@ -200,7 +202,7 @@ class JDatabasePostgresqlQueryTest extends TestCase
 
 		$this->assertThat(
 					(string) $q,
-					$this->equalTo("\nSELECT EXTRACT (YEAR FROM \"col\")\nFROM table")
+					$this->equalTo(str_replace("\n", PHP_EOL, "\nSELECT EXTRACT (YEAR FROM \"col\")\nFROM table"))
 		);
 	}
 
@@ -219,7 +221,7 @@ class JDatabasePostgresqlQueryTest extends TestCase
 
 		$this->assertThat(
 					(string) $q,
-					$this->equalTo("\nSELECT EXTRACT (MONTH FROM \"col\")\nFROM table")
+					$this->equalTo(str_replace("\n", PHP_EOL, "\nSELECT EXTRACT (MONTH FROM \"col\")\nFROM table"))
 		);
 	}
 
@@ -238,7 +240,7 @@ class JDatabasePostgresqlQueryTest extends TestCase
 
 		$this->assertThat(
 					(string) $q,
-					$this->equalTo("\nSELECT EXTRACT (DAY FROM \"col\")\nFROM table")
+					$this->equalTo(str_replace("\n", PHP_EOL, "\nSELECT EXTRACT (DAY FROM \"col\")\nFROM table"))
 		);
 	}
 
@@ -257,7 +259,7 @@ class JDatabasePostgresqlQueryTest extends TestCase
 
 		$this->assertThat(
 					(string) $q,
-					$this->equalTo("\nSELECT EXTRACT (HOUR FROM \"col\")\nFROM table")
+					$this->equalTo(str_replace("\n", PHP_EOL, "\nSELECT EXTRACT (HOUR FROM \"col\")\nFROM table"))
 		);
 	}
 
@@ -276,7 +278,7 @@ class JDatabasePostgresqlQueryTest extends TestCase
 
 		$this->assertThat(
 					(string) $q,
-					$this->equalTo("\nSELECT EXTRACT (MINUTE FROM \"col\")\nFROM table")
+					$this->equalTo(str_replace("\n", PHP_EOL, "\nSELECT EXTRACT (MINUTE FROM \"col\")\nFROM table"))
 		);
 	}
 
@@ -295,7 +297,7 @@ class JDatabasePostgresqlQueryTest extends TestCase
 
 		$this->assertThat(
 					(string) $q,
-					$this->equalTo("\nSELECT EXTRACT (SECOND FROM \"col\")\nFROM table")
+					$this->equalTo(str_replace("\n", PHP_EOL, "\nSELECT EXTRACT (SECOND FROM \"col\")\nFROM table"))
 		);
 	}
 
@@ -316,14 +318,14 @@ class JDatabasePostgresqlQueryTest extends TestCase
 
 		$this->assertThat(
 					(string) $q,
-					$this->equalTo("\nINSERT INTO table\n(col)\n(\nSELECT col2\nWHERE a=1)")
+					$this->equalTo(str_replace("\n", PHP_EOL, "\nINSERT INTO table\n(col)\n(\nSELECT col2\nWHERE a=1)"))
 		);
 
 		$q->clear();
 		$q->insert('table')->columns('col')->values('3');
 		$this->assertThat(
 					(string) $q,
-					$this->equalTo("\nINSERT INTO table\n(col) VALUES \n(3)")
+					$this->equalTo(str_replace("\n", PHP_EOL, "\nINSERT INTO table\n(col) VALUES \n(3)"))
 		);
 	}
 

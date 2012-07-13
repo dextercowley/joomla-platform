@@ -110,19 +110,22 @@ class JFolderTest extends TestCase
 			JPath::clean(JPATH_TESTS . '/tmp/test/test/index.txt')
 		);
 
+		$actual = JFolder::files(JPath::clean(JPATH_TESTS . '/tmp/test'), 'index.*', true, true, array('index.html'));
+		$actual = str_replace('\\', '/', $actual);
 		$this->assertEquals(
-			$expected,
-			JFolder::files(JPath::clean(JPATH_TESTS . '/tmp/test'), 'index.*', true, true, array('index.html')),
+			str_replace('\\', '/', $expected),
+			str_replace('\\', '/', $actual),
 			'Line: ' . __LINE__ . ' Should exclude index.html files'
 		);
 
-		$this->assertEquals(
-			array(
+		$expected = array(
 				JPath::clean(JPATH_TESTS . '/tmp/test/index.html'),
 				JPath::clean(JPATH_TESTS . '/tmp/test/test/index.html')
-			),
-			JFolder::files(JPath::clean(JPATH_TESTS . '/tmp/test'), 'index.html', true, true),
-			'Line: ' . __LINE__ . ' Should include full path of both index.html files'
+			);
+		$actual = JFolder::files(JPath::clean(JPATH_TESTS . '/tmp/test'), 'index.html', true, true);
+		$this->assertEquals(
+			str_replace('\\', '/', $expected),
+			str_replace('\\', '/', $actual)
 		);
 
 		$this->assertEquals(
@@ -134,11 +137,11 @@ class JFolderTest extends TestCase
 			'Line: ' . __LINE__ . ' Should include only file names of both index.html files'
 		);
 
+		$expected = array(JPath::clean(JPATH_TESTS . '/tmp/test/index.html'));
+		$actual = JFolder::files(JPath::clean(JPATH_TESTS . '/tmp/test'), 'index.html', false, true);
 		$this->assertEquals(
-			array(
-				JPath::clean(JPATH_TESTS . '/tmp/test/index.html')
-			),
-			JFolder::files(JPath::clean(JPATH_TESTS . '/tmp/test'), 'index.html', false, true),
+			str_replace('\\', '/', $expected),
+			str_replace('\\', '/', $actual),
 			'Line: ' . __LINE__ . ' Non-recursive should only return top folder file full path'
 		);
 
@@ -191,38 +194,47 @@ class JFolderTest extends TestCase
 			JFolder::folders(JPath::clean(JPATH_TESTS . '/tmp/test'), 'bar1', true, true, array('foo1', 'foo2'))
 		);
 
+		$expected = array(JPath::clean(JPATH_TESTS . '/tmp/test/foo2/bar1'));
+		$actual = JFolder::folders(JPath::clean(JPATH_TESTS . '/tmp/test'), 'bar1', true, true, array('foo1'));
 		$this->assertEquals(
-			array(JPath::clean(JPATH_TESTS . '/tmp/test/foo2/bar1')),
-			JFolder::folders(JPath::clean(JPATH_TESTS . '/tmp/test'), 'bar1', true, true, array('foo1'))
-		);
-		$this->assertEquals(
-			array(
-				JPath::clean(JPATH_TESTS . '/tmp/test/foo1/bar1'),
-				JPath::clean(JPATH_TESTS . '/tmp/test/foo2/bar1'),
-			),
-			JFolder::folders(JPath::clean(JPATH_TESTS . '/tmp/test'), 'bar1', true, true)
+			str_replace('\\', '/', $expected),
+			str_replace('\\', '/', $actual)
 		);
 
+		$expected = 			array(
+				JPath::clean(JPATH_TESTS . '/tmp/test/foo1/bar1'),
+				JPath::clean(JPATH_TESTS . '/tmp/test/foo2/bar1'),
+			);
+		$actual = JFolder::folders(JPath::clean(JPATH_TESTS . '/tmp/test'), 'bar1', true, true);
 		$this->assertEquals(
-			array(
+			str_replace('\\', '/', $expected),
+			str_replace('\\', '/', $actual)
+		);
+
+		$actual = 			array(
 				JPath::clean(JPATH_TESTS . '/tmp/test/foo1/bar1'),
 				JPath::clean(JPATH_TESTS . '/tmp/test/foo1/bar2'),
 				JPath::clean(JPATH_TESTS . '/tmp/test/foo2/bar1'),
 				JPath::clean(JPATH_TESTS . '/tmp/test/foo2/bar2'),
-			),
-			JFolder::folders(JPath::clean(JPATH_TESTS . '/tmp/test'), 'bar', true, true)
+			);
+		$expected = JFolder::folders(JPath::clean(JPATH_TESTS . '/tmp/test'), 'bar', true, true);
+		$this->assertEquals(
+			str_replace('\\', '/', $expected),
+			str_replace('\\', '/', $actual)
 		);
 
-		$this->assertEquals(
-			array(
+		$expected = array(
 				JPath::clean(JPATH_TESTS . '/tmp/test/foo1'),
 				JPath::clean(JPATH_TESTS . '/tmp/test/foo1/bar1'),
 				JPath::clean(JPATH_TESTS . '/tmp/test/foo1/bar2'),
 				JPath::clean(JPATH_TESTS . '/tmp/test/foo2'),
 				JPath::clean(JPATH_TESTS . '/tmp/test/foo2/bar1'),
 				JPath::clean(JPATH_TESTS . '/tmp/test/foo2/bar2'),
-			),
-			JFolder::folders(JPath::clean(JPATH_TESTS . '/tmp/test'), '.', true, true)
+			);
+		$actual = JFolder::folders(JPath::clean(JPATH_TESTS . '/tmp/test'), '.', true, true);
+		$this->assertEquals(
+			str_replace('\\', '/', $expected),
+			str_replace('\\', '/', $actual)
 		);
 
 		$this->assertEquals(
@@ -237,12 +249,14 @@ class JFolderTest extends TestCase
 			JFolder::folders(JPath::clean(JPATH_TESTS . '/tmp/test'), '.', true, false)
 		);
 
-		$this->assertEquals(
-			array(
+		$actual = array(
 				JPath::clean(JPATH_TESTS . '/tmp/test/foo1'),
 				JPath::clean(JPATH_TESTS . '/tmp/test/foo2'),
-			),
-			JFolder::folders(JPath::clean(JPATH_TESTS . '/tmp/test'), '.', false, true)
+			);
+		$expected = JFolder::folders(JPath::clean(JPATH_TESTS . '/tmp/test'), '.', false, true);
+		$this->assertEquals(
+			str_replace('\\', '/', $expected),
+			str_replace('\\', '/', $actual)
 		);
 
 		$this->assertEquals(

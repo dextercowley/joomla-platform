@@ -54,10 +54,10 @@ class JFormTest extends TestCase
 	public function testAddFieldPath()
 	{
 		// Check the default behaviour.
-		$paths = JForm::addFieldPath();
+		$paths = str_replace('\\', '/', JForm::addFieldPath());
 
 		// The default path is the class file folder/forms
-		$valid = JPATH_PLATFORM . '/joomla/form/fields';
+		$valid = str_replace('\\', '/', JPATH_PLATFORM . '/joomla/form/fields');
 
 		$this->assertThat(
 			in_array($valid, $paths),
@@ -84,10 +84,10 @@ class JFormTest extends TestCase
 	public function testAddFormPath()
 	{
 		// Check the default behaviour.
-		$paths = JForm::addFormPath();
+		$paths = str_replace('\\', '/', JForm::addFormPath());
 
 		// The default path is the class file folder/forms
-		$valid = JPATH_PLATFORM . '/joomla/form/forms';
+		$valid = str_replace('\\', '/', JPATH_PLATFORM . '/joomla/form/forms');
 
 		$this->assertThat(
 			in_array($valid, $paths),
@@ -114,10 +114,10 @@ class JFormTest extends TestCase
 	public function testAddRulePath()
 	{
 		// Check the default behaviour.
-		$paths = JForm::addRulePath();
+		$paths = str_replace('\\', '/', JForm::addRulePath());
 
 		// The default path is the class file folder/rules
-		$valid = JPATH_PLATFORM . '/joomla/form/rules';
+		$valid = str_replace('\\', '/', JPATH_PLATFORM . '/joomla/form/rules');
 
 		$this->assertThat(
 			in_array($valid, $paths),
