@@ -111,7 +111,6 @@ class JFolderTest extends TestCase
 		);
 
 		$actual = JFolder::files(JPath::clean(JPATH_TESTS . '/tmp/test'), 'index.*', true, true, array('index.html'));
-		$actual = str_replace('\\', '/', $actual);
 		$this->assertEquals(
 			str_replace('\\', '/', $expected),
 			str_replace('\\', '/', $actual),
