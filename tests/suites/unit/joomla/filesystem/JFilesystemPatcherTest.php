@@ -188,8 +188,9 @@ class JFilesystemPatcherTest extends TestCase
 	 */
 	public function testAdd($udiff, $root, $strip, $expected)
 	{
+		$expected[0]['root'] = str_replace('/', DIRECTORY_SEPARATOR, $expected[0]['root']);
 		$patcher = JFilesystemPatcher::getInstance()->reset();
-		$patcher->add($udiff, $root, $strip);
+		$patcher->add($udiff, str_replace('/', DIRECTORY_SEPARATOR, $root), $strip);
 		$this->assertAttributeEquals(
 			$expected,
 			'patches',
@@ -231,12 +232,12 @@ class JFilesystemPatcherTest extends TestCase
 ';
 		file_put_contents(JPATH_TESTS . '/tmp/patcher/lao2tzu.diff', $udiff);
 		$patcher = JFilesystemPatcher::getInstance()->reset();
-		$patcher->addFile(JPATH_TESTS . '/tmp/patcher/lao2tzu.diff', JPATH_TESTS . '/tmp/patcher');
+		$patcher->addFile(str_replace('/', DIRECTORY_SEPARATOR, JPATH_TESTS . '/tmp/patcher/lao2tzu.diff'), str_replace('/', DIRECTORY_SEPARATOR, JPATH_TESTS . '/tmp/patcher'));
 		$this->assertAttributeEquals(
 			array(
 				array(
 					'udiff' => $udiff,
-					'root' => JPATH_TESTS . '/tmp/patcher/',
+					'root' => str_replace('/', DIRECTORY_SEPARATOR, (JPATH_TESTS . '/tmp/patcher/')),
 					'strip' => 0
 				)
 			),
